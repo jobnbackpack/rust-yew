@@ -1,5 +1,7 @@
+use pulldown_cmark::{Options, Parser, html};
 use yew::prelude::*;
 use yew_router::prelude::*;
+use log::info;
 
 mod components;
 mod pages;
@@ -30,11 +32,20 @@ fn App() -> Html {
 
 #[function_component(Test)]
 fn test() -> Html {
-    html! {
-        <div>
-            <h1>{ "Test" }</h1>
-        </div>
-    }
+    let test_markdown_input = "# Hello world
+* first point
+* second
+* ~~strike~~ **bold**
+";
+
+    let mut options = Options::empty();
+    options.insert(Options::ENABLE_STRIKETHROUGH);
+    let parser = Parser::new_ext(test_markdown_input, options);
+
+    let mut html_output = String::new();
+    html::push_html(&mut html_output, parser);
+
+    Html::from_html_unchecked(html_output.into()) 
 }
 
 fn switch(routes: Route) -> Html {
@@ -48,5 +59,6 @@ fn switch(routes: Route) -> Html {
 }
 
 fn main() {
+    wasm_logger::init(wasm_logger::Config::default());
     yew::Renderer::<App>::new().render();
 }
