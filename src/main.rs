@@ -1,8 +1,12 @@
 use yew::prelude::*;
 use yew_router::prelude::*;
 
+mod components;
+mod pages;
+use components::navbar::Navbar;
+
 #[derive(Clone, Routable, PartialEq)]
-enum Route {
+pub enum Route {
     #[at("/")]
     Home,
     #[at("/test")]
@@ -16,20 +20,19 @@ enum Route {
 fn App() -> Html {
     html!{
         <BrowserRouter>
-            <Switch<Route> render={switch} />
+            <Navbar />
+            <main>
+                <Switch<Route> render={switch} />
+            </main>
         </BrowserRouter>
     }
 }
 
 #[function_component(Test)]
 fn test() -> Html {
-    let navigator = use_navigator().unwrap();
-
-    let onclick = Callback::from(move |_| navigator.push(&Route::Home));
     html! {
         <div>
-            <h1>{ "Secure" }</h1>
-            <button {onclick}>{ "Go Home" }</button>
+            <h1>{ "Test" }</h1>
         </div>
     }
 }
