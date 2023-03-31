@@ -1,11 +1,12 @@
-use pulldown_cmark::{Options, Parser, html};
 use yew::prelude::*;
 use yew_router::prelude::*;
 use log::info;
 
 mod components;
 mod pages;
+mod blog_post;
 use components::navbar::Navbar;
+use pages::blog_post_view::PostComponent;
 
 #[derive(Clone, Routable, PartialEq)]
 pub enum Route {
@@ -30,29 +31,11 @@ fn App() -> Html {
     }
 }
 
-#[function_component(Test)]
-fn test() -> Html {
-    let test_markdown_input = "# Hello world
-* first point
-* second
-* ~~strike~~ **bold**
-";
-
-    let mut options = Options::empty();
-    options.insert(Options::ENABLE_STRIKETHROUGH);
-    let parser = Parser::new_ext(test_markdown_input, options);
-
-    let mut html_output = String::new();
-    html::push_html(&mut html_output, parser);
-
-    Html::from_html_unchecked(html_output.into()) 
-}
-
 fn switch(routes: Route) -> Html {
     match routes {
         Route::Home => html! { <h1>{ "Home" }</h1> },
         Route::Test => html! {
-            <Test />
+            <PostComponent name="Hello" />
         },
         Route::NotFound => html! { <h1>{ "404" }</h1> },
     }
