@@ -539,6 +539,7 @@ dependencies = [
  "gloo",
  "log",
  "pulldown-cmark",
+ "wasm-bindgen",
  "wasm-logger",
  "yew",
  "yew-router",
