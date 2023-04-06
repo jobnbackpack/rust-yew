@@ -541,6 +541,7 @@ dependencies = [
  "pulldown-cmark",
  "wasm-bindgen",
  "wasm-logger",
+ "web-sys",
  "yew",
  "yew-router",
 ]
